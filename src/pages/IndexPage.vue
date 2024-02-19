@@ -6,6 +6,9 @@
       <img alt="Jedlik logo" src="../assets/Jedlik_big.png" />
       <h2>Jedlik Ányos Technikum - Győr</h2>
     </div>
+    <q-card>
+      
+    </q-card>
   </q-page>
 </template>
 
