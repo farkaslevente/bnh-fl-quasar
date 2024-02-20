@@ -118,7 +118,7 @@ function editDocument() {
 
           <div class="text-h6" style="background-color: #c1e2b3">
             Leírás
-            <div>
+            <div style="font-size: smaller; line-height: 1.1rem;">
               {{ item.leiras }}
             </div>
             <div Class="q-pa-md q-gutter-sm">
