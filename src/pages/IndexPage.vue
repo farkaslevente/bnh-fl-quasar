@@ -64,36 +64,22 @@ function editDocument() {
 //     store.many_GetAll();
 //   }
 // }
+
+// papíron dinamikus -> :v-for="store.many.category"
 </script>
 
 <template>
   <q-page>
     <div class="q-pa-md column items-center justify-start">
-      <q-btn-dropdown color="gray" label="Dropdown Button" text-color="black">
+      <q-btn-dropdown color="gray" label="Kategória" text-color="black">
         <q-list>
           <q-item v-close-popup clickable @click="onItemClick">
             <q-item-section>
               <q-item-label>Photos</q-item-label>
             </q-item-section>
-          </q-item>
-
-          <q-item v-close-popup clickable @click="onItemClick">
-            <q-item-section>
-              <q-item-label>Videos</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item v-close-popup clickable @click="onItemClick">
-            <q-item-section>
-              <q-item-label>Articles</q-item-label>
-            </q-item-section>
-          </q-item>
+          </q-item>      
         </q-list>
       </q-btn-dropdown>
-    </div>
-    <div class="column flex-center" style="min-height: inherit">
-      <img alt="Jedlik logo" src="../assets/Jedlik_big.png" />
-      <h2>Jedlik Ányos Technikum - Győr</h2>
     </div>
     <div class="row">
       <div class="col col-lg-12 col-md-4 col-sm-4"></div>
@@ -112,14 +98,13 @@ function editDocument() {
     <EditDialogComponent />
     <q-table
       v-model:selected="store.app.selectedMany"
-      card-class="bg-indigo-9 text-white"
+      card-class="bg-green-9 text-white"
       card-style="padding: 22px;"
       :columns="columns"
       grid
       row-key="id"
       :rows="store.many.documents"
-      selection="multiple"
-      title="Hahu hirdetések"
+      selection="multiple"    
     />
     <div class="row justify-center q-mt-sm q-gutter-md">
       <q-btn color="green" label="Új hirdetés" no-caps @click="store.app.showNewDialog = true" />
