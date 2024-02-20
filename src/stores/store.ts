@@ -41,19 +41,19 @@ export interface IBnHFL {
   id?: number; // PK
   categoryId?: number; // FK
   titleField?: string;
-  releaseYear: string;
-  km: number;
-  color: string;
-  fuelType: string;
-  cylinderCapacity: number;
-  performance: number;
-  inPrestineCondition: boolean;
+  releaseYear?: string;
+  km?: number;
+  color?: string;
+  fuelType?: string;
+  cylinderCapacity?: number;
+  performance?: number;
+  inPrestineCondition?: boolean;
   descField?: string;
   dateField?: string;
   boolField?: boolean;
   priceField?: number;
   imgField?: string;
-  performance_kw: number;
+  performance_kw?: number;
   category?: IOne;
 }
 
@@ -155,6 +155,26 @@ export const useStore = defineStore({
           ShowErrorWithNotify(error);
         });
     },
+    async bnhFl_GetAll(): Promise<void> {
+      Loading.show();
+      this.bnhFl.documents = [];
+      api
+        .get("api/hirdetesek")
+        .then((res) => {
+          Loading.hide();
+          if (res?.data) {
+            this.bnhFl.documents = res.data;
+          }
+        })
+        .catch((error) => {
+          ShowErrorWithNotify(error);
+        });
+    },
+    // async one_getByCategory(): Promise<void>{
+    //   Loading.show();
+    //   $axios
+    //   .get(`api/kategoriak/${this.app.selec}`)
+    // }
 
     async many_GetById(): Promise<void> {
       if (this.many?.document?.id) {

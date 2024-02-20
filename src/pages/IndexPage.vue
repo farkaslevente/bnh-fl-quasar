@@ -74,7 +74,7 @@ function editDocument() {
     <div class="q-pa-md column items-center justify-start">
       <q-btn-dropdown color="gray" label="Kategória" text-color="black">
         <q-list>
-          <q-item v-for="label in store.one.documents" v-bind:key="label" v-close-popup clickable @click="onItemClick">
+          <q-item v-for="label in store.one.documents" v-bind:key="label.id" v-close-popup clickable @click="onItemClick">
             <q-item-section>
               <q-item-label> {{ label.categoryNameField }}</q-item-label>
             </q-item-section>
@@ -87,7 +87,7 @@ function editDocument() {
     </div>
 
     <!-- Design -->
-    <q-card v-for="item in store.many.documents" v-bind:key="item">
+    <q-card v-for="item in store.bnhFl.documents" v-bind:key="item.id">
       <div class="col" style="margin: 10px;">
         <div class="text-h6 text-center" style="background-color: #c1e2b3">Termék neve/ára</div>
 
