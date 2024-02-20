@@ -149,6 +149,18 @@
       "boolField": true,
       "priceField": 26950000,
       "imgField": "https://nitslaszlo.github.io/jedlik-frontend-starter/19.jpg"
+    },
+    {
+      "titleField": "Teszt",
+      "categoryId": 2,
+      "descField": "Tesz leírás",
+      "id": 20
+    },
+    {
+      "titleField": "a",
+      "descField": "b",
+      "categoryId": 3,
+      "id": 21
     }
   ],
   "categories": [

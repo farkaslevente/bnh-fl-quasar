@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useStore, IMany } from "../stores/store";
+import { useStore } from "../stores/store"; //Imany
 import { onMounted } from "vue";
-import { QTableColumn } from "quasar";
+//import { QTableColumn } from "quasar";
 import NewDialogComponent from "../components/NewDialogComponent.vue";
 import EditDialogComponent from "../components/EditDialogComponent.vue";
 
@@ -11,33 +11,33 @@ const store = useStore();
 const value = ref(true);
 
 function onItemClick() {}
-const columns: QTableColumn[] = [
-  { name: "id", label: "Azon", field: "id", align: "left", sortable: true },
-  { name: "titleField", label: "Cím", field: "titleField", align: "left", sortable: true },
-  {
-    name: "descField",
-    label: "Leírás",
-    field: (row: IMany) => {
-      const desc: string = row.descField as string;
-      if (desc.length > 130) {
-        return desc.slice(0, 124) + "...";
-      } else {
-        return desc;
-      }
-    },
-    align: "left",
-    sortable: true,
-  },
-  {
-    name: "categoryNameField",
-    label: "Kategória",
-    field: (row: IMany) => row.category?.categoryNameField,
-    align: "left",
-    sortable: true,
-  },
-  { name: "imgField", label: "Kép", field: "imgField", align: "center" },
-  { name: "boolField", label: "Tehermentes", field: "boolField", align: "center" },
-];
+// const columns: QTableColumn[] = [
+//   { name: "id", label: "Azon", field: "id", align: "left", sortable: true },
+//   { name: "titleField", label: "Cím", field: "titleField", align: "left", sortable: true },
+//   {
+//     name: "descField",
+//     label: "Leírás",
+//     field: (row: IMany) => {
+//       const desc: string = row.descField as string;
+//       if (desc.length > 130) {
+//         return desc.slice(0, 124) + "...";
+//       } else {
+//         return desc;
+//       }
+//     },
+//     align: "left",
+//     sortable: true,
+//   },
+//   {
+//     name: "categoryNameField",
+//     label: "Kategória",
+//     field: (row: IMany) => row.category?.categoryNameField,
+//     align: "left",
+//     sortable: true,
+//   },
+//   { name: "imgField", label: "Kép", field: "imgField", align: "center" },
+//   { name: "boolField", label: "Tehermentes", field: "boolField", align: "center" },
+// ];
 
 onMounted(() => {
   store.many_GetAll();
@@ -89,7 +89,7 @@ function editDocument() {
 
     <!-- Design -->
     <q-card v-for="item in store.many.documents" v-bind:key="item.id">
-      <div class="col" style="margin: 10px;">
+      <div class="col">
         <div class="text-h6 text-center" style="background-color: #c1e2b3">
           {{item.titleField}}
           <div>
@@ -130,7 +130,7 @@ function editDocument() {
     </q-card>
     <NewDialogComponent />
     <EditDialogComponent />
-    <q-table
+    <!-- <q-table
       v-model:selected="store.app.selectedMany"
       card-class="bg-green-9 text-white"
       card-style="padding: 22px;"
@@ -139,7 +139,7 @@ function editDocument() {
       row-key="id"
       :rows="store.many.documents"
       selection="multiple"
-    />
+    /> -->
     <div class="row justify-center q-mt-sm q-gutter-md">
       <q-btn color="green" label="Új hirdetés" no-caps @click="store.app.showNewDialog = true" />
       <q-btn
@@ -170,8 +170,5 @@ function editDocument() {
 <style lang="scss" scoped>
 h2 {
   font-size: 3vw;
-}
-#anyu {
-  justify-content: space-evenly;
 }
 </style>
