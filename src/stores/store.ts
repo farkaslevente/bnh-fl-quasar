@@ -159,7 +159,7 @@ export const useStore = defineStore({
       Loading.show();
       this.bnhFl.documents = [];
       api
-        .get("api/hirdetesek")
+        .get("/api/hirdetesek")
         .then((res) => {
           Loading.hide();
           if (res?.data) {

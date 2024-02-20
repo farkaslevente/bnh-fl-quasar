@@ -41,6 +41,7 @@ const columns: QTableColumn[] = [
 
 onMounted(() => {
   store.many_GetAll();
+  store.bnhFl_GetAll(); //megnézendő
 });
 
 function deleteDocument(): void {
@@ -87,21 +88,29 @@ function editDocument() {
     </div>
 
     <!-- Design -->
-    <q-card v-for="item in store.bnhFl.documents" v-bind:key="item.id">
+    <q-card v-for="item in store.many.documents" v-bind:key="item.id">
       <div class="col" style="margin: 10px;">
-        <div class="text-h6 text-center" style="background-color: #c1e2b3">Termék neve/ára</div>
+        <div class="text-h6 text-center" style="background-color: #c1e2b3">
+          {{item.titleField}}
+          <div>
+            {{ item.priceField }} Ft
+          </div>
+        </div>
 
         <div class="text-subtitle2" style="background-color: bisque">
           <ul style="margin: 0">
             <li>Szín: {{ item.id }}</li>
             <li>Évjárat: {{item.dateField}}</li>
-            <li>Hengerűrtartalom: adat</li>
+            <li>Hengerűrtartalom: adat cm3</li>
             <li>Hirdetés dátuma: adat</li>
           </ul>
         </div>
 
         <div class="text-h6" style="background-color: #c1e2b3">
           Leírás
+          <div>
+            {{ item.descField }}
+          </div>
           <div Class="q-pa-md q-gutter-sm">
             <q-toggle v-model="value" color="gray" label="Teljes leírás" left-label size="xs" />
           </div>
@@ -113,8 +122,8 @@ function editDocument() {
               <q-carousel-slide img-src="https://cdn.quasar.dev/img/quasar.jpg" :name="4" />
             </q-carousel>
           </div>
-          <div style="background-color: bisque">
-            <q-btn v-show="true" color="green" label="Hirdetés szerkesztése" no-caps @click="editDocument()" />
+          <div  style="background-color: bisque">
+            <q-btn v-show="true" class="justify-center centers" color="green" label="Hirdetés szerkesztése" no-caps @click="editDocument()" />
           </div>
         </div>
       </div>
