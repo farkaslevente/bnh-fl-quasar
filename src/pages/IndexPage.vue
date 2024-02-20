@@ -8,6 +8,7 @@ import EditDialogComponent from "../components/EditDialogComponent.vue";
 
 const slide = ref(1);
 const store = useStore();
+const value = ref(true);
 
 function onItemClick() {}
 const columns: QTableColumn[] = [
@@ -77,7 +78,7 @@ function editDocument() {
             <q-item-section>
               <q-item-label>Photos</q-item-label>
             </q-item-section>
-          </q-item>      
+          </q-item>
         </q-list>
       </q-btn-dropdown>
     </div>
@@ -94,6 +95,40 @@ function editDocument() {
         </q-carousel>
       </div>
     </q-card>
+
+    <!-- Design -->
+    <q-card>
+      <div class="col">
+        <div class="text-h6 text-center" style="background-color: #c1e2b3">Termék neve/ára</div>
+
+        <div class="text-subtitle2" style="background-color: bisque">
+          <ul style="margin: 0">
+            <li>Szín: adat</li>
+            <li>Évjárat: adat</li>
+            <li>Hengerűrtartalom: adat</li>
+            <li>Hirdetés dátuma: adat</li>
+          </ul>
+        </div>
+
+        <div class="text-h6" style="background-color: #c1e2b3">
+          Leírás
+          <div Class="q-pa-md q-gutter-sm">
+            <q-toggle v-model="value" color="gray" label="Teljes leírás" left-label size="xs" />
+          </div>
+          <div class="q-pa-md" style="background-color: bisque">
+            <q-carousel v-model="slide" animated infinite swipeable thumbnails>
+              <q-carousel-slide img-src="https://cdn.quasar.dev/img/mountains.jpg" :name="1" />
+              <q-carousel-slide img-src="https://cdn.quasar.dev/img/parallax1.jpg" :name="2" />
+              <q-carousel-slide img-src="https://cdn.quasar.dev/img/parallax2.jpg" :name="3" />
+              <q-carousel-slide img-src="https://cdn.quasar.dev/img/quasar.jpg" :name="4" />
+            </q-carousel>
+          </div>
+          <div style="background-color: bisque">
+            <q-btn v-show="true" color="green" label="Hirdetés szerkesztése" no-caps @click="editDocument()" />
+          </div>
+        </div>
+      </div>
+    </q-card>
     <NewDialogComponent />
     <EditDialogComponent />
     <q-table
@@ -104,7 +139,7 @@ function editDocument() {
       grid
       row-key="id"
       :rows="store.many.documents"
-      selection="multiple"    
+      selection="multiple"
     />
     <div class="row justify-center q-mt-sm q-gutter-md">
       <q-btn color="green" label="Új hirdetés" no-caps @click="store.app.showNewDialog = true" />
