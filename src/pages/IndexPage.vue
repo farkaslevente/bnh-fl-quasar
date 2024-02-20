@@ -123,8 +123,8 @@ function editDocument() {
             </q-carousel>
           </div>
           <div  style="background-color: bisque">
-            <q-btn v-show="true" class="justify-center centers" color="green" label="Hirdetés szerkesztése" no-caps @click="editDocument()" />
-          </div>
+            <q-btn v-show="true" class="justify-center row" color="green" label="Hirdetés szerkesztése" no-caps @click="editDocument()" />
+          </div>         
         </div>
       </div>
     </q-card>
