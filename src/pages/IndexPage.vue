@@ -75,7 +75,13 @@ function editDocument() {
     <div class="q-pa-md column items-center justify-start">
       <q-btn-dropdown color="gray" label="Kategória" text-color="black">
         <q-list>
-          <q-item v-for="label in store.one.documents" v-bind:key="label.id" v-close-popup clickable @click="onItemClick">
+          <q-item
+            v-for="label in store.one.documents"
+            v-bind:key="label.id"
+            v-close-popup
+            clickable
+            @click="onItemClick"
+          >
             <q-item-section>
               <q-item-label> {{ label.categoryNameField }}</q-item-label>
             </q-item-section>
@@ -88,46 +94,58 @@ function editDocument() {
     </div>
 
     <!-- Design -->
-    <q-card v-for="item in store.many.documents" v-bind:key="item.id">
-      <div class="col">
-        <div class="text-h6 text-center" style="background-color: #c1e2b3">
-          {{item.titleField}}
-          <div>
-            {{ item.priceField }} Ft
+    <div class="row q-col-gutter-sm justify-center">
+      <q-card
+        v-for="item in store.bnhFl.documents"
+        v-bind:key="item.id"
+        class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style="margin: 10px"
+      >
+        <div class="col">
+          <div class="text-h6 text-center" style="background-color: #c1e2b3">
+            {{ item.titleField }}
+            <div>{{ item.priceField }} Ft</div>
           </div>
-        </div>
 
-        <div class="text-subtitle2" style="background-color: bisque">
-          <ul style="margin: 0">
-            <li>Szín: {{ item.id }}</li>
-            <li>Évjárat: {{item.dateField}}</li>
-            <li>Hengerűrtartalom: adat cm3</li>
-            <li>Hirdetés dátuma: adat</li>
-          </ul>
-        </div>
+          <div class="text-subtitle2" style="background-color: bisque">
+            <ul style="margin: 0">
+              <li>Szín: {{ item.color }}</li>
+              <li>Évjárat: {{ item.dateField }}</li>
+              <li>Hengerűrtartalom: adat cm3</li>
+              <li>Hirdetés dátuma: adat</li>
+            </ul>
+          </div>
 
-        <div class="text-h6" style="background-color: #c1e2b3">
-          Leírás
-          <div>
-            {{ item.descField }}
+          <div class="text-h6" style="background-color: #c1e2b3">
+            Leírás
+            <div>
+              {{ item.descField }}
+            </div>
+            <div Class="q-pa-md q-gutter-sm">
+              <q-toggle v-model="value" color="gray" label="Teljes leírás" left-label size="xs" />
+            </div>
+            <div class="q-pa-md" style="background-color: bisque">
+              <q-carousel v-model="slide" animated infinite swipeable thumbnails>
+                <q-carousel-slide img-src="https://cdn.quasar.dev/img/mountains.jpg" :name="1" />
+                <q-carousel-slide img-src="https://cdn.quasar.dev/img/parallax1.jpg" :name="2" />
+                <q-carousel-slide img-src="https://cdn.quasar.dev/img/parallax2.jpg" :name="3" />
+                <q-carousel-slide img-src="https://cdn.quasar.dev/img/quasar.jpg" :name="4" />
+              </q-carousel>
+            </div>
+            <div style="background-color: bisque">
+              <q-btn
+                v-show="true"
+                class="justify-center row"
+                color="green"
+                label="Hirdetés szerkesztése"
+                no-caps
+                @click="editDocument()"
+              />
+            </div>
           </div>
-          <div Class="q-pa-md q-gutter-sm">
-            <q-toggle v-model="value" color="gray" label="Teljes leírás" left-label size="xs" />
-          </div>
-          <div class="q-pa-md" style="background-color: bisque">
-            <q-carousel v-model="slide" animated infinite swipeable thumbnails>
-              <q-carousel-slide img-src="https://cdn.quasar.dev/img/mountains.jpg" :name="1" />
-              <q-carousel-slide img-src="https://cdn.quasar.dev/img/parallax1.jpg" :name="2" />
-              <q-carousel-slide img-src="https://cdn.quasar.dev/img/parallax2.jpg" :name="3" />
-              <q-carousel-slide img-src="https://cdn.quasar.dev/img/quasar.jpg" :name="4" />
-            </q-carousel>
-          </div>
-          <div  style="background-color: bisque">
-            <q-btn v-show="true" class="justify-center row" color="green" label="Hirdetés szerkesztése" no-caps @click="editDocument()" />
-          </div>         
         </div>
-      </div>
-    </q-card>
+      </q-card>
+    </div>
     <NewDialogComponent />
     <EditDialogComponent />
     <!-- <q-table
