@@ -17,7 +17,7 @@ export interface IApp {
     pozitívGomb: string;
     negatívGomb: string;
     válasz?: boolean;
-  }
+  };
 }
 
 export interface IOne {
@@ -37,6 +37,26 @@ export interface IMany {
   category?: IOne;
 }
 
+export interface IBnHFL {
+  id?: number; // PK
+  categoryId?: number; // FK
+  titleField?: string;
+  releaseYear: string;
+  km: number;
+  color: string;
+  fuelType: string;
+  cylinderCapacity: number;
+  performance: number;
+  inPrestineCondition: boolean;
+  descField?: string;
+  dateField?: string;
+  boolField?: boolean;
+  priceField?: number;
+  imgField?: string;
+  performance_kw: number;
+  category?: IOne;
+}
+
 export interface IOther {
   id?: number; // PK
 }
@@ -52,6 +72,11 @@ interface IState {
     document: IMany;
     documentOld: IMany;
     documents: IMany[];
+  };
+  bnhFl: {
+    document: IBnHFL;
+    documentOld: IBnHFL;
+    documents: IBnHFL[];
   };
   other: {
     document: IOther;
@@ -74,6 +99,11 @@ export const useStore = defineStore({
       documentOld: {},
       documents: [],
     },
+    bnhFl: {
+      document: {},
+      documentOld: {},
+      documents: [],
+    },
     other: {
       document: {},
       documentOld: {},
@@ -85,11 +115,11 @@ export const useStore = defineStore({
       filter: "",
       selectedMany: [],
       selectedOne: [],
-      yesNoComp:{
+      yesNoComp: {
         kérdés: "Igen vagy nem?",
         pozitívGomb: "Igen",
-        negatívGomb: "Nem"
-      }
+        negatívGomb: "Nem",
+      },
     },
   }),
   getters: {},

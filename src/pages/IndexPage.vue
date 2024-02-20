@@ -74,9 +74,9 @@ function editDocument() {
     <div class="q-pa-md column items-center justify-start">
       <q-btn-dropdown color="gray" label="Kategória" text-color="black">
         <q-list>
-          <q-item v-close-popup clickable @click="onItemClick">
+          <q-item v-for="label in store.one.documents" v-bind:key="label" v-close-popup clickable @click="onItemClick">
             <q-item-section>
-              <q-item-label>Photos</q-item-label>
+              <q-item-label> {{ label.categoryNameField }}</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -85,26 +85,16 @@ function editDocument() {
     <div class="row">
       <div class="col col-lg-12 col-md-4 col-sm-4"></div>
     </div>
-    <q-card>
-      <div class="q-pa-md">
-        <q-carousel v-model="slide" animated infinite swipeable thumbnails>
-          <q-carousel-slide img-src="https://cdn.quasar.dev/img/mountains.jpg" :name="1" />
-          <q-carousel-slide img-src="https://cdn.quasar.dev/img/parallax1.jpg" :name="2" />
-          <q-carousel-slide img-src="https://cdn.quasar.dev/img/parallax2.jpg" :name="3" />
-          <q-carousel-slide img-src="https://cdn.quasar.dev/img/quasar.jpg" :name="4" />
-        </q-carousel>
-      </div>
-    </q-card>
 
     <!-- Design -->
-    <q-card>
-      <div class="col">
+    <q-card v-for="item in store.many.documents" v-bind:key="item">
+      <div class="col" style="margin: 10px;">
         <div class="text-h6 text-center" style="background-color: #c1e2b3">Termék neve/ára</div>
 
         <div class="text-subtitle2" style="background-color: bisque">
           <ul style="margin: 0">
-            <li>Szín: adat</li>
-            <li>Évjárat: adat</li>
+            <li>Szín: {{ item.id }}</li>
+            <li>Évjárat: {{item.dateField}}</li>
             <li>Hengerűrtartalom: adat</li>
             <li>Hirdetés dátuma: adat</li>
           </ul>
