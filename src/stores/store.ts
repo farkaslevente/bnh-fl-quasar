@@ -38,22 +38,21 @@ export interface IMany {
 }
 
 export interface IBnHFL {
-  id?: number; // PK
-  categoryId?: number; // FK
-  titleField?: string;
-  releaseYear?: string;
-  km?: number;
-  color?: string;
-  fuelType?: string;
-  cylinderCapacity?: number;
-  performance?: number;
-  inPrestineCondition?: boolean;
-  descField?: string;
-  dateField?: string;
-  boolField?: boolean;
-  priceField?: number;
-  imgField?: string;
-  performance_kw?: number;
+  _id?: number; // PK
+  kategoria_id?: number; // FK
+  cim?: string;
+  evjarat?: string;
+  km_allas?: number;
+  szin?: string;
+  uzemanyag?: string;
+  hengerurtartalom?: number;
+  teljesitmeny?: number;
+  serulesmentes?: boolean;
+  leiras?: string;
+  hirdetes_datum?: string;  
+  vetelar?: number;
+  kepek?: string;
+  teljesitmeny_kw?: number;
   category?: IOne;
 }
 

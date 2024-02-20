@@ -97,29 +97,29 @@ function editDocument() {
     <div class="row q-col-gutter-sm justify-center">
       <q-card
         v-for="item in store.bnhFl.documents"
-        v-bind:key="item.id"
+        v-bind:key="item._id"
         class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
         style="margin: 10px"
       >
         <div class="col">
           <div class="text-h6 text-center" style="background-color: #c1e2b3">
-            {{ item.titleField }}
-            <div>{{ item.priceField }} Ft</div>
+            {{ item.cim }}
+            <div>{{ item.vetelar }} Ft</div>
           </div>
 
           <div class="text-subtitle2" style="background-color: bisque">
             <ul style="margin: 0">
-              <li>Szín: {{ item.color }}</li>
-              <li>Évjárat: {{ item.dateField }}</li>
-              <li>Hengerűrtartalom: adat cm3</li>
-              <li>Hirdetés dátuma: adat</li>
+              <li>Szín: {{ item.szin }}</li>
+              <li>Évjárat: {{ item.evjarat }}</li>
+              <li>Hengerűrtartalom: {{item.hengerurtartalom}} cm3</li>
+              <li>Hirdetés dátuma: {{ item.hirdetes_datum }}</li>
             </ul>
           </div>
 
           <div class="text-h6" style="background-color: #c1e2b3">
             Leírás
             <div>
-              {{ item.descField }}
+              {{ item.leiras }}
             </div>
             <div Class="q-pa-md q-gutter-sm">
               <q-toggle v-model="value" color="gray" label="Teljes leírás" left-label size="xs" />
