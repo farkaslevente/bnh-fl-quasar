@@ -11,33 +11,6 @@ const store = useStore();
 const value = ref(true);
 
 function onItemClick() {}
-// const columns: QTableColumn[] = [
-//   { name: "id", label: "Azon", field: "id", align: "left", sortable: true },
-//   { name: "titleField", label: "Cím", field: "titleField", align: "left", sortable: true },
-//   {
-//     name: "descField",
-//     label: "Leírás",
-//     field: (row: IMany) => {
-//       const desc: string = row.descField as string;
-//       if (desc.length > 130) {
-//         return desc.slice(0, 124) + "...";
-//       } else {
-//         return desc;
-//       }
-//     },
-//     align: "left",
-//     sortable: true,
-//   },
-//   {
-//     name: "categoryNameField",
-//     label: "Kategória",
-//     field: (row: IMany) => row.category?.categoryNameField,
-//     align: "left",
-//     sortable: true,
-//   },
-//   { name: "imgField", label: "Kép", field: "imgField", align: "center" },
-//   { name: "boolField", label: "Tehermentes", field: "boolField", align: "center" },
-// ];
 
 onMounted(() => {
   store.many_GetAll();
