@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { Notify, Loading } from "quasar";
 import { api } from "src/boot/axios";
+//import axios from "src/boot/axios";
 // import router from "src/router";
 
 // === INTERFACES ===
@@ -169,11 +170,25 @@ export const useStore = defineStore({
           ShowErrorWithNotify(error);
         });
     },
-    // async one_getByCategory(): Promise<void>{
-    //   Loading.show();
-    //   $axios
-    //   .get(`api/kategoriak/${this.app.selec}`)
-    // }
+
+    //Ha kellene
+
+    //  async one_getByCategory(): Promise<void>{
+    //    Loading.show();
+    //    $axios
+    //    .get(`api/kategoriak/${this.app.selectedCategory}/hirdetesek`)
+    //    .then((res) => {
+    //     Loading.hide();
+    //     if (res?data){
+    //       this.many.documents = res.data.map((r:any) => r.kategoria_hirdetesei).flat();
+    //       this.many.documents = this.many.documents.map((r:any) => ({
+    //         ...r,
+    //         aktKep: 0,
+    //         expandedLeiras: false;
+    //       }))
+    //     }
+    //    })
+    //  },
 
     async many_GetById(): Promise<void> {
       if (this.many?.document?.id) {
