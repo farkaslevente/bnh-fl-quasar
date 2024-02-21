@@ -15,7 +15,7 @@ let showMenuBar = ref(true);
           <q-avatar>
             <q-img src="../assets/Jedlik_small.png" />
           </q-avatar>
-          BNL-FL Dolgozat
+          BNH-FL Dolgozat
         </q-toolbar-title>      
      
       </q-toolbar>
