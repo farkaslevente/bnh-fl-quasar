@@ -1,1 +1,2 @@
-# Benedek-Nikli Hunor, Farkas Levente Quasar Dolgozat
+# Benedek-Nikli Hunor
+# Farkas Levente Quasar Dolgozat
