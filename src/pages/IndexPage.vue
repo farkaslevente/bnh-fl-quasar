@@ -82,27 +82,26 @@ function editDocument() {
 
           <div class="text-subtitle2" style="background-color: bisque">
             <ul style="margin: 0">
-              <li>Szín: {{ item.szin }}</li>
+              <li>Szín:{{ item.szin }}</li>
               <li>Évjárat: {{ item.evjarat }}</li>
-              <li>Hengerűrtartalom: {{item.hengerurtartalom}} cm3</li>
+              <li>Hengerűrtartalom: {{ item.hengerurtartalom }} cm3</li>
               <li>Hirdetés dátuma: {{ item.hirdetes_datum }}</li>
             </ul>
           </div>
 
           <div class="text-h6" style="background-color: #c1e2b3">
             Leírás
-            <div style="font-size: smaller; line-height: 1.1rem;">
+            <div style="font-size: small; line-height: 1.1rem; font-weight: normal">
               {{ item.leiras }}
             </div>
             <div Class="q-pa-md q-gutter-sm">
               <q-toggle v-model="value" color="gray" label="Teljes leírás" left-label size="xs" />
             </div>
+
+            <!-- v-for="src in store.bnhFl.documents" :key="src.kepek" -->
             <div class="q-pa-md" style="background-color: bisque">
               <q-carousel v-model="slide" animated infinite swipeable thumbnails>
-                <q-carousel-slide img-src="https://cdn.quasar.dev/img/mountains.jpg" :name="1" />
-                <q-carousel-slide img-src="https://cdn.quasar.dev/img/parallax1.jpg" :name="2" />
-                <q-carousel-slide img-src="https://cdn.quasar.dev/img/parallax2.jpg" :name="3" />
-                <q-carousel-slide img-src="https://cdn.quasar.dev/img/quasar.jpg" :name="4" />
+                <q-carousel-slide img-src="https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&height=900&width=1600&fit=bounds" :name="1" />
               </q-carousel>
             </div>
             <div style="background-color: bisque">
