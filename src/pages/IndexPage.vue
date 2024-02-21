@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import { useStore } from "../stores/store"; //Imany
 import { onMounted } from "vue";
-//import { QTableColumn } from "quasar";
 import NewDialogComponent from "../components/NewDialogComponent.vue";
 import EditDialogComponent from "../components/EditDialogComponent.vue";
 
@@ -14,13 +13,12 @@ function onItemClick() {}
 
 onMounted(() => {
   store.many_GetAll();
-  store.bnhFl_GetAll(); //megnézendő
+  store.bnhFl_GetAll();
 });
 
 function deleteDocument(): void {
   store.many.document = { id: store.app.selectedMany[0].id };
   store.many_DeleteById();
-  // selected.value = [];
   store.app.selectedMany = [];
 }
 
@@ -40,7 +38,6 @@ function editDocument() {
 //   }
 // }
 
-// papíron dinamikus -> :v-for="store.many.category"
 </script>
 
 <template>
