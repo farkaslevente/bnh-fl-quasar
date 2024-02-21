@@ -37,7 +37,6 @@ function editDocument() {
 //     store.many_GetAll();
 //   }
 // }
-
 </script>
 
 <template>
@@ -81,7 +80,7 @@ function editDocument() {
             <ul style="margin: 0">
               <li>Szín:{{ item.szin }}</li>
               <li>Évjárat: {{ item.evjarat }}</li>
-              <li>Hengerűrtartalom: {{ item.hengerurtartalom }} cm3</li>
+              <li>Hengerűrtartalom: {{ item.hengerurtartalom }} cm <sup>3</sup></li>
               <li>Hirdetés dátuma: {{ item.hirdetes_datum }}</li>
             </ul>
           </div>
@@ -98,7 +97,10 @@ function editDocument() {
             <!-- v-for="src in store.bnhFl.documents" :key="src.kepek" -->
             <div class="q-pa-md" style="background-color: bisque">
               <q-carousel v-model="slide" animated infinite swipeable thumbnails>
-                <q-carousel-slide img-src="https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&height=900&width=1600&fit=bounds" :name="1" />
+                <q-carousel-slide
+                  img-src="https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&height=900&width=1600&fit=bounds"
+                  :name="1"
+                />
               </q-carousel>
             </div>
             <div style="background-color: bisque">
