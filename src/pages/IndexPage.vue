@@ -9,10 +9,9 @@ const slide = ref(1);
 const store = useStore();
 const value = ref(true);
 
-function onItemClick() {}
-
 onMounted(() => {
   store.many_GetAll();
+  store.one_GetAll();
   store.bnhFl_GetAll();
 });
 
@@ -42,7 +41,7 @@ function editDocument() {
 <template>
   <q-page>
     <div class="q-pa-md column items-center justify-start">
-      <q-btn-dropdown color="gray" label="Kategória" text-color="black">
+      <!-- <q-btn-dropdown color="gray" label="Kategória" text-color="black">
         <q-list>
           <q-item
             v-for="label in store.one.documents"
@@ -56,7 +55,17 @@ function editDocument() {
             </q-item-section>
           </q-item>
         </q-list>
-      </q-btn-dropdown>
+      </q-btn-dropdown> -->
+      <q-select
+            v-model="store.many.document.categoryId"
+            clearable
+            emit-value
+            label="Kategória"
+            map-options
+            option-label="categoryNameField"
+            option-value="id"
+            :options="store.one.documents"                                    
+          />
     </div>
     <div class="row">
       <div class="col col-lg-12 col-md-4 col-sm-4"></div>
