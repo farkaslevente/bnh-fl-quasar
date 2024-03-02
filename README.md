@@ -1,5 +1,6 @@
 # Benedek-Nikli Hunor & Farkas Levente
 Quasar Exersice
+
 ![Quasar](https://cdn.quasar.dev/logo-v2/512/logo.png)
 
 Imagine it's working:
