@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useStore } from "../stores/store"; //Imany
+import { useStore } from "../stores/store";
 import { onMounted } from "vue";
 import NewDialogComponent from "../components/NewDialogComponent.vue";
 import EditDialogComponent from "../components/EditDialogComponent.vue";
-//import useSelectedStore from "../stores/storeSelectedIndex.ts";
-// import { arrayBuffer } from "stream/consumers";
 
 const slide = ref(1);
 const store = useStore();
@@ -21,7 +19,7 @@ onMounted(() => {
   store.one_GetAll();
   store.bnhFl_GetAll();
 
-  toggleValues.value = new Array(store.bnhFl.documents.length).fill(false);
+  toggleValues.value = new Array(store.bnhFl.documents.length).fill(true);
   // store.bnhFl.documents.forEach(item => {
   //   getPics(item._id);
   // });
@@ -81,10 +79,13 @@ function editDocument() {
       <q-card
         v-for="(item, _id) in store.bnhFl.documents"
         v-bind:key="item._id"
-        class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        class="col-xs-12 col-sm-6 col-md-3 col-lg-3"
         style="margin: 10px"
       >
-        <div v-if="item.kategoria_id == defaultCategoryId">
+        <!-- |
+              | v-if="item.kategoria_id == defaultCategoryId"
+              V -->
+        <div>
           <div class="col">
             <div class="text-h6 text-center" style="background-color: #c1e2b3">
               {{ item.cim }} - {{ item.vetelar }} Ft
@@ -121,8 +122,9 @@ function editDocument() {
                 <div v-if="item.leiras && item.leiras.length < 120">
                   <q-toggle
                     v-model="toggleValues[_id]"
+                    class="custom-toggle"
                     color="gray"
-                    :default-value="false"
+                    :default-value="true"
                     :disable="true"
                     label="Teljes leírás"
                     left-label
@@ -134,7 +136,7 @@ function editDocument() {
                   <q-toggle
                     v-model="toggleValues[_id]"
                     color="gray"
-                    :default-value="false"
+                    :default-value="true"
                     label="Teljes leírás"
                     left-label
                     size="xs"
@@ -167,7 +169,7 @@ function editDocument() {
             </div>
           </div>
         </div>
-        <div v-else></div>
+        <!-- <div v-else></div> -->
       </q-card>
     </div>
     <NewDialogComponent />
