@@ -87,7 +87,7 @@ function editDocument() {
               V -->
         <div>
           <div class="col">
-            <div class="text-h6 text-center" style="background-color: #c1e2b3">
+            <div class="text-h6 text-center" style="background-color: #c1e2b3;">
               {{ item.cim }} - {{ item.vetelar }} Ft
             </div>
 
