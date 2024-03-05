@@ -4,6 +4,7 @@ import { useStore } from "../stores/store"; //Imany
 import { onMounted } from "vue";
 import NewDialogComponent from "../components/NewDialogComponent.vue";
 import EditDialogComponent from "../components/EditDialogComponent.vue";
+//import useSelectedStore from "../stores/storeSelectedIndex.ts";
 // import { arrayBuffer } from "stream/consumers";
 
 const slide = ref(1);
@@ -13,17 +14,34 @@ const defaultCategoryId = ref(1);
 const toggleValues = ref<boolean[]>([]);
 const selectedCategory = ref();
 
+// const myMap = new Map<number, string>();
+
 onMounted(() => {
   store.many_GetAll();
   store.one_GetAll();
   store.bnhFl_GetAll();
+
   toggleValues.value = new Array(store.bnhFl.documents.length).fill(false);
+  // store.bnhFl.documents.forEach(item => {
+  //   getPics(item._id);
+  // });
 });
 
 function handleSelectionChange(newValue) {
+  console.log("New value:");
   console.log("New value:", newValue);
   selectedCategory.value = newValue;
+  store.bnhFl_GetByCategoryId(selectedCategory.value);
 }
+//  function getPics(id){
+//    for (let i = 0; i < store.bnhFl.documents.length; index++) {
+//     if (id == store.bnhFl.documents[i]._id) {
+//        myMap.set(id, store.bnhFl.documents[i].kepek);
+//        console.log(id);
+//      }
+
+//   }
+//  }
 
 function deleteDocument(): void {
   store.many.document = { id: store.app.selectedMany[0].id };
@@ -35,17 +53,6 @@ function editDocument() {
   store.many.document.id = store.app.selectedMany[0].id;
   store.app.showEditDialog = true;
 }
-
-// function filterUpdate() {
-//   if (!store.app.filter) {
-//     store.app.filter = "";
-//   }
-//   if (store.app.filter.length > 0) {
-//     store.many_Filter();
-//   } else {
-//     store.many_GetAll();
-//   }
-// }
 </script>
 
 <template>
@@ -60,9 +67,9 @@ function editDocument() {
         label="Kategória"
         map-options
         option-label="categoryNameField"
-        option-value="id"
+        option-value="categoryNameField"
         :options="store.one.documents"
-        @new-value="handleSelectionChange"
+        @update:model-value="(newValue) => handleSelectionChange(newValue)"
       />
     </div>
     <div class="row">
@@ -111,7 +118,14 @@ function editDocument() {
                 </div>
               </div>
               <div Class="q-pa-md q-gutter-sm">
-                <q-toggle v-model="toggleValues[_id]" color="gray" label="Teljes leírás" left-label size="xs" />
+                <q-toggle
+                  v-model="toggleValues[_id]"
+                  color="gray"
+                  :default-value="false"
+                  label="Teljes leírás"
+                  left-label
+                  size="xs"
+                />
               </div>
 
               <!-- v-for="src in store.bnhFl.documents" :key="src.kepek" -->
@@ -122,6 +136,9 @@ function editDocument() {
                     :name="1"
                   />
                 </q-carousel>
+                <!-- <q-carousel v-model="slide" animated infinite swipeable thumbnails>
+                  <q-carousel-slide v-for="(value, key) in myMap" :key="key" :img-src="value" :name="key"/>
+                </q-carousel> -->
               </div>
               <div style="background-color: bisque">
                 <q-btn

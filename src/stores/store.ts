@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { Notify, Loading } from "quasar";
 import { api } from "src/boot/axios";
+//import useSelectedStore from "../stores/storeSelectedIndex.ts";
 //import axios from "src/boot/axios";
 // import router from "src/router";
 
@@ -50,7 +51,7 @@ export interface IBnHFL {
   teljesitmeny?: number;
   serulesmentes?: boolean;
   leiras?: string;
-  hirdetes_datum?: string;  
+  hirdetes_datum?: string;
   vetelar?: number;
   kepek?: string;
   teljesitmeny_kw?: number;
@@ -170,7 +171,22 @@ export const useStore = defineStore({
           ShowErrorWithNotify(error);
         });
     },
-
+    async bnhFl_GetByCategoryId(selectedCategory): Promise<void> {
+      Loading.show();
+      $axios
+      .get(`api/kategoriak/${selectedCategory}/hirdetesek`)
+      .then((res) => {
+        Loading.hide();
+        if (res?.data) {
+          this.many.documents = res.data.map((r: any) => r.kategoria_hirdetesei).flat();
+          this.many.documnets = this.many.documents.map((r: any) => ({
+            ...r,
+            aktkep: 0,
+            expandedLeiras: false,
+          }));
+        }
+      });
+    },
     //Ha kellene
 
     //  async one_getByCategory(): Promise<void>{
