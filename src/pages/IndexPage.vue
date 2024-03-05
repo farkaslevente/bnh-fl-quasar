@@ -118,14 +118,28 @@ function editDocument() {
                 </div>
               </div>
               <div Class="q-pa-md q-gutter-sm">
-                <q-toggle
-                  v-model="toggleValues[_id]"
-                  color="gray"
-                  :default-value="false"
-                  label="Teljes leírás"
-                  left-label
-                  size="xs"
-                />
+                <div v-if="item.leiras && item.leiras.length < 120">
+                  <q-toggle
+                    v-model="toggleValues[_id]"
+                    color="gray"
+                    :default-value="false"
+                    :disable="true"
+                    label="Teljes leírás"
+                    left-label
+                    size="xs"
+                  />
+                </div>
+
+                <div v-else>
+                  <q-toggle
+                    v-model="toggleValues[_id]"
+                    color="gray"
+                    :default-value="false"
+                    label="Teljes leírás"
+                    left-label
+                    size="xs"
+                  />
+                </div>
               </div>
 
               <!-- v-for="src in store.bnhFl.documents" :key="src.kepek" -->
