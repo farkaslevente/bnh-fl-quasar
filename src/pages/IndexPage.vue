@@ -4,16 +4,26 @@ import { useStore } from "../stores/store"; //Imany
 import { onMounted } from "vue";
 import NewDialogComponent from "../components/NewDialogComponent.vue";
 import EditDialogComponent from "../components/EditDialogComponent.vue";
+// import { arrayBuffer } from "stream/consumers";
 
 const slide = ref(1);
 const store = useStore();
-const value = ref(true);
+//const value = ref(true);
+const defaultCategoryId = ref(1);
+const toggleValues = ref<boolean[]>([]);
+const selectedCategory = ref();
 
 onMounted(() => {
   store.many_GetAll();
   store.one_GetAll();
   store.bnhFl_GetAll();
+  toggleValues.value = new Array(store.bnhFl.documents.length).fill(false);
 });
+
+function handleSelectionChange(newValue) {
+  console.log("New value:", newValue);
+  selectedCategory.value = newValue;
+}
 
 function deleteDocument(): void {
   store.many.document = { id: store.app.selectedMany[0].id };
@@ -41,31 +51,19 @@ function editDocument() {
 <template>
   <q-page>
     <div class="q-pa-md column items-center justify-start">
-      <!-- <q-btn-dropdown color="gray" label="Kategória" text-color="black">
-        <q-list>
-          <q-item
-            v-for="label in store.one.documents"
-            v-bind:key="label.id"
-            v-close-popup
-            clickable
-            @click="onItemClick"
-          >
-            <q-item-section>
-              <q-item-label> {{ label.categoryNameField }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-btn-dropdown> -->
       <q-select
-            v-model="store.many.document.categoryId"
-            clearable
-            emit-value
-            label="Kategória"
-            map-options
-            option-label="categoryNameField"
-            option-value="id"
-            :options="store.one.documents"                                    
-          />
+        v-model="store.many.document.categoryId"
+        clearable
+        :default-value="defaultCategoryId"
+        emit-value
+        filled
+        label="Kategória"
+        map-options
+        option-label="categoryNameField"
+        option-value="id"
+        :options="store.one.documents"
+        @new-value="handleSelectionChange"
+      />
     </div>
     <div class="row">
       <div class="col col-lg-12 col-md-4 col-sm-4"></div>
@@ -74,70 +72,75 @@ function editDocument() {
     <!-- Design -->
     <div class="row q-col-gutter-sm justify-center">
       <q-card
-        v-for="item in store.bnhFl.documents"
+        v-for="(item, _id) in store.bnhFl.documents"
         v-bind:key="item._id"
         class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
         style="margin: 10px"
       >
-        <div class="col">
-          <div class="text-h6 text-center" style="background-color: #c1e2b3">
-            {{ item.cim }}
-            <div>{{ item.vetelar }} Ft</div>
-          </div>
-
-          <div class="text-subtitle2" style="background-color: bisque">
-            <ul style="margin: 0">
-              <li>Szín:{{ item.szin }}</li>
-              <li>Évjárat: {{ item.evjarat }}</li>
-              <li>Hengerűrtartalom: {{ item.hengerurtartalom }} cm <sup>3</sup></li>
-              <li>Hirdetés dátuma: {{ item.hirdetes_datum }}</li>
-            </ul>
-          </div>
-
-          <div class="text-h6" style="background-color: #c1e2b3">
-            Leírás
-            <div style="font-size: small; line-height: 1.1rem; font-weight: normal">
-              {{ item.leiras }}
-            </div>
-            <div Class="q-pa-md q-gutter-sm">
-              <q-toggle v-model="value" color="gray" label="Teljes leírás" left-label size="xs" />
+        <div v-if="item.kategoria_id == defaultCategoryId">
+          <div class="col">
+            <div class="text-h6 text-center" style="background-color: #c1e2b3">
+              {{ item.cim }} - {{ item.vetelar }} Ft
             </div>
 
-            <!-- v-for="src in store.bnhFl.documents" :key="src.kepek" -->
-            <div class="q-pa-md" style="background-color: bisque">
-              <q-carousel v-model="slide" animated infinite swipeable thumbnails>
-                <q-carousel-slide
-                  img-src="https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&height=900&width=1600&fit=bounds"
-                  :name="1"
+            <div class="text-subtitle2" style="background-color: bisque">
+              <ul style="margin: 0">
+                <li>
+                  Szín: <b>{{ item.szin }}</b>
+                </li>
+                <li>
+                  Évjárat: <b>{{ item.evjarat }}</b>
+                </li>
+                <li>
+                  Hengerűrtartalom: <b>{{ item.hengerurtartalom }} cm <sup>3</sup></b>
+                </li>
+                <li>
+                  Hirdetés dátuma: <b>{{ item.hirdetes_datum }}</b>
+                </li>
+              </ul>
+            </div>
+
+            <div class="text-h6" style="background-color: #c1e2b3">
+              <div style="font-size: small; line-height: 1.1rem; font-weight: normal; padding: 10px">
+                <br />
+                <div v-if="toggleValues[_id] == false">
+                  {{ item.leiras && item.leiras.length > 120 ? item.leiras.substring(0, 120) + "..." : item.leiras }}
+                </div>
+                <div v-else>
+                  {{ item.leiras }}
+                </div>
+              </div>
+              <div Class="q-pa-md q-gutter-sm">
+                <q-toggle v-model="toggleValues[_id]" color="gray" label="Teljes leírás" left-label size="xs" />
+              </div>
+
+              <!-- v-for="src in store.bnhFl.documents" :key="src.kepek" -->
+              <div class="q-pa-md" style="background-color: bisque">
+                <q-carousel v-model="slide" animated infinite swipeable thumbnails>
+                  <q-carousel-slide
+                    img-src="https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&height=900&width=1600&fit=bounds"
+                    :name="1"
+                  />
+                </q-carousel>
+              </div>
+              <div style="background-color: bisque">
+                <q-btn
+                  v-show="true"
+                  class="justify-center row"
+                  color="green"
+                  label="Hirdetés szerkesztése"
+                  no-caps
+                  @click="editDocument()"
                 />
-              </q-carousel>
-            </div>
-            <div style="background-color: bisque">
-              <q-btn
-                v-show="true"
-                class="justify-center row"
-                color="green"
-                label="Hirdetés szerkesztése"
-                no-caps
-                @click="editDocument()"
-              />
+              </div>
             </div>
           </div>
         </div>
+        <div v-else></div>
       </q-card>
     </div>
     <NewDialogComponent />
     <EditDialogComponent />
-    <!-- <q-table
-      v-model:selected="store.app.selectedMany"
-      card-class="bg-green-9 text-white"
-      card-style="padding: 22px;"
-      :columns="columns"
-      grid
-      row-key="id"
-      :rows="store.many.documents"
-      selection="multiple"
-    /> -->
     <div class="row justify-center q-mt-sm q-gutter-md">
       <q-btn color="green" label="Új hirdetés" no-caps @click="store.app.showNewDialog = true" />
       <q-btn
