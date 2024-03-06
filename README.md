@@ -8,6 +8,6 @@ Report:
 - description is cut at the end of the last word
 - dynamic card positions and sizes
 
-what doesb't work:
+what doesn't work:
  - editing advertisements
  - creating new advertisements
