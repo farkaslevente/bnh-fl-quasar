@@ -1,16 +1,21 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { ref } from "vue";
 import { useStore } from "../stores/store";
 import { onMounted } from "vue";
 import NewDialogComponent from "../components/NewDialogComponent.vue";
 import EditDialogComponent from "../components/EditDialogComponent.vue";
 
+
 const slide = ref(1);
 const store = useStore();
 //const value = ref(true);
 const defaultCategoryId = ref(1);
 const toggleValues = ref<boolean[]>([]);
-  let categoryName ="";
+let categoryName = "";
+
+const filteredDocuments = computed(() => {    
+    return this.store.bnhFl.documents.filter(item => item.kategoria_id === this.defaultCategoryId);
+  });
 
 // const myMap = new Map<number, string>();
 
@@ -27,7 +32,7 @@ onMounted(() => {
 
 function handleSelectionChange(newValue) {
   // console.log("Documents:", store.one.documents);
-  store.one.documents.forEach((element) => {    
+  store.one.documents.forEach((element) => {
     if (newValue == element._id) {
       categoryName = element.nev;
       defaultCategoryId.value = element._id;
@@ -59,8 +64,56 @@ function editDocument() {
   store.many.document.id = store.app.selectedMany[0].id;
   store.app.showEditDialog = true;
 }
-</script>
+</script> -->
+<script setup lang="ts">
+import { ref, computed } from "vue";
+import { useStore } from "../stores/store";
+import { onMounted } from "vue";
+import NewDialogComponent from "../components/NewDialogComponent.vue";
+import EditDialogComponent from "../components/EditDialogComponent.vue";
 
+const slide = ref(1);
+const store = useStore();
+const defaultCategoryId = ref(1);
+const toggleValues = ref<boolean[]>([]);
+let categoryName = "";
+
+const filteredDocuments = computed(() => {
+  return store.bnhFl.documents.filter((item) => item.kategoria_id === defaultCategoryId.value);
+});
+
+onMounted(() => {
+  store.many_GetAll();
+  store.one_GetAll();
+  store.bnhFl_GetAll();
+
+  toggleValues.value = new Array(store.bnhFl.documents.length).fill(true);
+});
+
+function handleSelectionChange(newValue) {
+  store.one.documents.forEach((element) => {
+    if (newValue == element._id) {
+      categoryName = element.nev;
+      defaultCategoryId.value = element._id;
+      return;
+    }
+  });
+  if (categoryName !== "") {
+    store.bnhFl_GetByCategoryId(categoryName);
+  }
+}
+
+function deleteDocument(): void {
+  store.many.document = { id: store.app.selectedMany[0].id };
+  store.many_DeleteById();
+  store.app.selectedMany = [];
+}
+
+function editDocument() {
+  store.many.document.id = store.app.selectedMany[0].id;
+  store.app.showEditDialog = true;
+}
+</script>
 <template>
   <q-page>
     <div class="q-pa-md column items-center justify-start">
@@ -89,7 +142,7 @@ function editDocument() {
     <!-- Design -->
     <div class="row q-col-gutter-sm justify-center">
       <q-card
-        v-for="(item, _id) in store.bnhFl.documents"
+        v-for="(item, _id) in filteredDocuments"
         v-bind:key="item._id"
         class="col-xs-12 col-sm-6 col-md-3 col-lg-3"
         style="margin: 10px"
@@ -97,7 +150,7 @@ function editDocument() {
         <!-- |
               | v-if="item.kategoria_id == defaultCategoryId"
               V -->
-        <div v-if="item.kategoria_id == defaultCategoryId">
+        <div>
           <div class="col">
             <div class="text-h6 text-center" style="background-color: #c1e2b3">
               {{ item.cim }} - {{ item.vetelar }} Ft
@@ -181,7 +234,7 @@ function editDocument() {
             </div>
           </div>
         </div>
-        <div v-else></div>
+        <!-- <div v-else></div> -->
       </q-card>
     </div>
     <NewDialogComponent />
