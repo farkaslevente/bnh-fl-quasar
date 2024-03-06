@@ -9,7 +9,7 @@ const slide = ref(1);
 const store = useStore();
 const defaultCategoryId = ref(1);
 const toggleValues = ref<boolean[]>([]);
-let categoryName = "";
+let categoryName = "Személyautó";
 
 const filteredDocuments = computed(() => {
   return store.bnhFl.documents.filter((item) => item.kategoria_id === defaultCategoryId.value);
