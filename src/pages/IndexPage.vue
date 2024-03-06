@@ -87,7 +87,7 @@ onMounted(() => {
   store.one_GetAll();
   store.bnhFl_GetAll();
 
-  toggleValues.value = new Array(store.bnhFl.documents.length).fill(true);
+  toggleValues.value = new Array(store.bnhFl.documents.length).fill(false);
 });
 
 function handleSelectionChange(newValue) {
@@ -189,7 +189,6 @@ function editDocument() {
                     v-model="toggleValues[_id]"
                     class="custom-toggle"
                     color="gray"
-                    :default-value="true"
                     :disable="true"
                     label="Teljes leírás"
                     left-label
@@ -198,14 +197,7 @@ function editDocument() {
                 </div>
 
                 <div v-else>
-                  <q-toggle
-                    v-model="toggleValues[_id]"
-                    color="gray"
-                    :default-value="true"
-                    label="Teljes leírás"
-                    left-label
-                    size="xs"
-                  />
+                  <q-toggle v-model="toggleValues[_id]" color="gray" label="Teljes leírás" left-label size="xs" />
                 </div>
               </div>
 
