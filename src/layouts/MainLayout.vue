@@ -13,8 +13,8 @@ let showMenuBar = ref(true);
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar>
-            <!-- <q-img src="../assets/Jedlik_small.png" /> -->
-            <q-img src="https://media.tenor.com/2l4-h42qnmcAAAAi/toothless-dancing-toothless.gif"/>
+            <q-img src="../assets/Jedlik_small.png" /> 
+            <!-- <q-img src="https://media.tenor.com/2l4-h42qnmcAAAAi/toothless-dancing-toothless.gif"/> -->
           </q-avatar>
           BNH-FL Dolgozat
         </q-toolbar-title>      

@@ -16,11 +16,11 @@ const filteredDocuments = computed(() => {
 });
 
 onMounted(() => {
+  toggleValues.value = new Array(store.bnhFl.documents.length).fill(false);
+  console.log(toggleValues.value);
   store.many_GetAll();
   store.one_GetAll();
-  store.bnhFl_GetAll();  
-   toggleValues.value = new Array(store.bnhFl.documents.length).fill(false);
-   console.log(toggleValues.value);
+  store.bnhFl_GetAll();
 });
 
 function handleSelectionChange(newValue) {
@@ -62,7 +62,7 @@ function editDocument() {
         emit-value
         filled
         label="Kategória"
-        map-options        
+        map-options
         option-label="nev"
         option-value="_id"
         :options="store.one.documents"
@@ -130,13 +130,14 @@ function editDocument() {
                 <div v-else>
                   <q-toggle v-model="toggleValues[_id]" color="gray" label="Teljes leírás" left-label size="xs" />
                 </div>
-              </div>
+              </div>             
               <div class="q-pa-md" style="background-color: bisque">
                 <q-carousel v-model="slide" animated infinite swipeable thumbnails>
-                  <q-carousel-slide
-                    img-src="https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&height=900&width=1600&fit=bounds"
-                    :name="1"
-                  />
+                  <!-- Loop through the images in the 'kepek' array -->                 
+                  <template v-for="(image, index) in item.kepek" :key="index">
+                    <q-carousel-slide :img-src="image" :name="index" />
+                  </template>
+                
                 </q-carousel>
               </div>
               <div style="background-color: bisque">
