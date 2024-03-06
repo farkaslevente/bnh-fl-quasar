@@ -13,6 +13,7 @@ export interface IApp {
   showNewDialog: boolean;
   filter: string;
   selectedMany: Array<IMany>;
+  selectedCategory: string;
   selectedOne: Array<IOne>;
   yesNoComp: {
     kérdés: string;
@@ -56,6 +57,7 @@ export interface IBnHFL {
   kepek?: string[];
   teljesitmeny_kw?: number;
   category?: IOne;
+  expandedLeiras: boolean;
 }
 
 export interface IOther {
@@ -116,6 +118,7 @@ export const useStore = defineStore({
       filter: "",
       selectedMany: [],
       selectedOne: [],
+      selectedCategory: "Személyautó",
       yesNoComp: {
         kérdés: "Igen vagy nem?",
         pozitívGomb: "Igen",
@@ -172,9 +175,9 @@ export const useStore = defineStore({
           ShowErrorWithNotify(error);
         });
     },
-    async bnhFl_GetByCategoryId(selectedCategory): Promise<void> {
+    async getByCategoryName(): Promise<void> {
       Loading.show();
-      api.get(`api/kategoriak/${selectedCategory}/hirdetesek`).then((res) => {
+      api.get(`api/kategoriak/${this.app.selectedCategory}/hirdetesek`).then((res) => {
         Loading.hide();
         if (res?.data) {
           this.many.documents = res.data.map((r: any) => r.kategoria_hirdetesei).flat();
@@ -185,7 +188,7 @@ export const useStore = defineStore({
           }));
         }
       });
-    },    
+    },
 
     async many_GetById(): Promise<void> {
       if (this.many?.document?.id) {

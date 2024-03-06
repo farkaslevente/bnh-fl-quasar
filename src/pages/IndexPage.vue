@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useStore } from "../stores/store";
 import { onMounted } from "vue";
 import NewDialogComponent from "../components/NewDialogComponent.vue";
@@ -7,34 +7,23 @@ import EditDialogComponent from "../components/EditDialogComponent.vue";
 
 const slide = ref(1);
 const store = useStore();
-const defaultCategoryId = ref(1);
+// const defaultCategoryId = ref(1);
 const toggleValues = ref<boolean[]>([]);
-let categoryName = "";
 
-const filteredDocuments = computed(() => {
-  return store.bnhFl.documents.filter((item) => item.kategoria_id === defaultCategoryId.value);
-});
+// const filteredDocuments = computed(() => {
+//   return store.bnhFl.documents.filter((item) => item.kategoria_id === defaultCategoryId.value);
+// });
 
 onMounted(() => {
-  store.many_GetAll();
   store.one_GetAll();
-  store.bnhFl_GetAll();  
-   toggleValues.value = new Array(store.bnhFl.documents.length).fill(false);
-   console.log(toggleValues.value);
+  store.getByCategoryName();
+  // toggleValues.value = new Array(store.bnhFl.documents.length).fill(false);
+  console.log(toggleValues.value);
 });
 
-function handleSelectionChange(newValue) {
-  store.one.documents.forEach((element) => {
-    if (newValue == element._id) {
-      categoryName = element.nev;
-      defaultCategoryId.value = element._id;
-      return;
-    }
-  });
-  if (categoryName !== "") {
-    store.bnhFl_GetByCategoryId(categoryName);
-  }
-}
+// function handleSelectionChange() {   
+//     store.bnhFl_GetByCategoryId();  
+// }
 
 function shortenString(source_string, max_length) {
   var short = source_string.substr(0, max_length);
@@ -57,34 +46,34 @@ function editDocument() {
   <q-page>
     <div class="q-pa-md column items-center justify-start">
       <q-select
-        v-model="store.one.document.categoryNameField"
+        v-model="store.app.selectedCategory"
         clearable
         emit-value
         filled
         label="Kategória"
-        map-options        
+        map-options
         option-label="nev"
-        option-value="_id"
+        option-value="nev"
         :options="store.one.documents"
-        @update:model-value="(newValue) => handleSelectionChange(newValue)"
+        @update:model-value="store.getByCategoryName()"
       />
     </div>
     <div class="row">
       <div class="col col-lg-12 col-md-4 col-sm-4"></div>
     </div>
 
-    <!-- Design -->
+    <!-- Design -->    
     <div class="row q-col-gutter-sm justify-center">
       <q-card
-        v-for="(item, _id) in filteredDocuments"
-        v-bind:key="item._id"
+        v-for="(item, i) in store.many.documents"
+        v-bind:key="i"
         class="col-xs-12 col-sm-6 col-md-3 col-lg-3"
         style="margin: 10px"
       >
         <div>
           <div class="col">
             <div class="text-h6 text-center" style="background-color: #c1e2b3">
-              {{ item.cim }} - {{ item.vetelar }} Ft
+              {{ store.documents[i].cim }} - {{ store.documents[i].vetelar }} Ft
             </div>
 
             <div class="text-subtitle2" style="background-color: bisque">
@@ -107,7 +96,7 @@ function editDocument() {
             <div class="text-h6" style="background-color: #c1e2b3">
               <div style="font-size: small; line-height: 1.1rem; font-weight: normal; padding: 10px">
                 <br />
-                <div v-if="toggleValues[_id] == false">
+                <div v-if="toggleValues[i] == false">
                   {{ shortenString(item.leiras, 200) }}
                 </div>
                 <div v-else>
@@ -117,7 +106,7 @@ function editDocument() {
               <div Class="q-pa-md q-gutter-sm">
                 <div v-if="item.leiras && item.leiras.length < 120">
                   <q-toggle
-                    v-model="toggleValues[_id]"
+                    v-model="store.documents[i].expandedLeiras"
                     class="custom-toggle"
                     color="gray"
                     :disable="true"
@@ -128,7 +117,7 @@ function editDocument() {
                 </div>
 
                 <div v-else>
-                  <q-toggle v-model="toggleValues[_id]" color="gray" label="Teljes leírás" left-label size="xs" />
+                  <q-toggle v-model="toggleValues[i]" color="gray" label="Teljes leírás" left-label size="xs" />
                 </div>
               </div>
               <div class="q-pa-md" style="background-color: bisque">
@@ -152,6 +141,7 @@ function editDocument() {
             </div>
           </div>
         </div>
+        {{ store.documents[i].expandedLeiras }}
       </q-card>
     </div>
     <NewDialogComponent />
