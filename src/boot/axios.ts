@@ -17,7 +17,7 @@ declare module "@vue/runtime-core" {
 
 // localhost:3000 -> JSON Server default port
 // Run backend JSON Server: npm run backend
-const api = axios.create({ baseURL: "http://localhost:3000" });
+const api = axios.create({ baseURL: "https://hahu.cyclic.app/" });
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

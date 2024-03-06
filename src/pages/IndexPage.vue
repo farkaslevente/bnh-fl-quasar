@@ -10,7 +10,7 @@ const store = useStore();
 //const value = ref(true);
 const defaultCategoryId = ref(1);
 const toggleValues = ref<boolean[]>([]);
-const selectedCategory = ref();
+  let categoryName ="";
 
 // const myMap = new Map<number, string>();
 
@@ -26,10 +26,18 @@ onMounted(() => {
 });
 
 function handleSelectionChange(newValue) {
-  console.log("New value:");
-  console.log("New value:", newValue);
-  selectedCategory.value = newValue;
-  store.bnhFl_GetByCategoryId(selectedCategory.value);
+  // console.log("Documents:", store.one.documents);
+  store.one.documents.forEach((element) => {    
+    if (newValue == element._id) {
+      categoryName = element.nev;
+      defaultCategoryId.value = element._id;
+      return;
+    }
+  });
+  console.log("New value:", categoryName);
+  if (categoryName !== "") {
+    store.bnhFl_GetByCategoryId(categoryName);
+  }
 }
 //  function getPics(id){
 //    for (let i = 0; i < store.bnhFl.documents.length; index++) {
@@ -57,18 +65,22 @@ function editDocument() {
   <q-page>
     <div class="q-pa-md column items-center justify-start">
       <q-select
-        v-model="store.many.document.categoryId"
+        v-model="store.one.document.categoryNameField"
         clearable
-        :default-value="defaultCategoryId"
         emit-value
         filled
         label="Kategória"
         map-options
-        option-label="categoryNameField"
-        option-value="categoryNameField"
+        option-label="nev"
+        option-value="_id"
         :options="store.one.documents"
         @update:model-value="(newValue) => handleSelectionChange(newValue)"
       />
+      <!-- <q-item v-for="label in store.one.documents" v-bind:key="label" v-close-popup clickable @click="handleSelectionChange(newValue)">
+        <q-item-section>
+          <q-item-label>{{ label.categoryNameField }}</q-item-label>
+        </q-item-section>
+      </q-item> -->
     </div>
     <div class="row">
       <div class="col col-lg-12 col-md-4 col-sm-4"></div>
@@ -85,9 +97,9 @@ function editDocument() {
         <!-- |
               | v-if="item.kategoria_id == defaultCategoryId"
               V -->
-        <div>
+        <div v-if="item.kategoria_id == defaultCategoryId">
           <div class="col">
-            <div class="text-h6 text-center" style="background-color: #c1e2b3;">
+            <div class="text-h6 text-center" style="background-color: #c1e2b3">
               {{ item.cim }} - {{ item.vetelar }} Ft
             </div>
 
@@ -159,7 +171,7 @@ function editDocument() {
               <div style="background-color: bisque">
                 <q-btn
                   v-show="true"
-                  class="justify-center row"
+                  class="justify-center"
                   color="green"
                   label="Hirdetés szerkesztése"
                   no-caps
@@ -169,7 +181,7 @@ function editDocument() {
             </div>
           </div>
         </div>
-        <!-- <div v-else></div> -->
+        <div v-else></div>
       </q-card>
     </div>
     <NewDialogComponent />

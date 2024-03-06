@@ -129,12 +129,13 @@ export const useStore = defineStore({
       Loading.show();
       this.one.documents = [];
       api
-        .get("api/categories")
+        .get("api/kategoriak")
         .then((res) => {
           Loading.hide();
           if (res?.data) {
             this.one.documents = res.data;
           }
+          console.log(res.data);
         })
         .catch((error) => {
           ShowErrorWithNotify(error);
@@ -145,7 +146,7 @@ export const useStore = defineStore({
       Loading.show();
       this.many.documents = [];
       api
-        .get("api/advertisements")
+        .get("api/hirdetesek")
         .then((res) => {
           Loading.hide();
           if (res?.data) {
@@ -160,7 +161,7 @@ export const useStore = defineStore({
       Loading.show();
       this.bnhFl.documents = [];
       api
-        .get("https://hahu.cyclic.app/api/hirdetesek")
+        .get("api/hirdetesek")
         .then((res) => {
           Loading.hide();
           if (res?.data) {
@@ -173,13 +174,11 @@ export const useStore = defineStore({
     },
     async bnhFl_GetByCategoryId(selectedCategory): Promise<void> {
       Loading.show();
-      $axios
-      .get(`api/kategoriak/${selectedCategory}/hirdetesek`)
-      .then((res) => {
+      api.get(`api/kategoriak/${selectedCategory}/hirdetesek`).then((res) => {
         Loading.hide();
         if (res?.data) {
           this.many.documents = res.data.map((r: any) => r.kategoria_hirdetesei).flat();
-          this.many.documnets = this.many.documents.map((r: any) => ({
+          this.many.documents = this.many.documents.map((r: any) => ({
             ...r,
             aktkep: 0,
             expandedLeiras: false,
@@ -301,7 +300,7 @@ export const useStore = defineStore({
       if (this.many?.document) {
         Loading.show();
         api
-          .post("api/advertisements", this.many.document)
+          .post("api/hirdetesek", this.many.document)
           .then((res) => {
             Loading.hide();
             if (res?.data) {
