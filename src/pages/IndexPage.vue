@@ -1,70 +1,3 @@
-<!-- <script setup lang="ts">
-import { ref } from "vue";
-import { useStore } from "../stores/store";
-import { onMounted } from "vue";
-import NewDialogComponent from "../components/NewDialogComponent.vue";
-import EditDialogComponent from "../components/EditDialogComponent.vue";
-
-
-const slide = ref(1);
-const store = useStore();
-//const value = ref(true);
-const defaultCategoryId = ref(1);
-const toggleValues = ref<boolean[]>([]);
-let categoryName = "";
-
-const filteredDocuments = computed(() => {    
-    return this.store.bnhFl.documents.filter(item => item.kategoria_id === this.defaultCategoryId);
-  });
-
-// const myMap = new Map<number, string>();
-
-onMounted(() => {
-  store.many_GetAll();
-  store.one_GetAll();
-  store.bnhFl_GetAll();
-
-  toggleValues.value = new Array(store.bnhFl.documents.length).fill(true);
-  // store.bnhFl.documents.forEach(item => {
-  //   getPics(item._id);
-  // });
-});
-
-function handleSelectionChange(newValue) {
-  // console.log("Documents:", store.one.documents);
-  store.one.documents.forEach((element) => {
-    if (newValue == element._id) {
-      categoryName = element.nev;
-      defaultCategoryId.value = element._id;
-      return;
-    }
-  });
-  console.log("New value:", categoryName);
-  if (categoryName !== "") {
-    store.bnhFl_GetByCategoryId(categoryName);
-  }
-}
-//  function getPics(id){
-//    for (let i = 0; i < store.bnhFl.documents.length; index++) {
-//     if (id == store.bnhFl.documents[i]._id) {
-//        myMap.set(id, store.bnhFl.documents[i].kepek);
-//        console.log(id);
-//      }
-
-//   }
-//  }
-
-function deleteDocument(): void {
-  store.many.document = { id: store.app.selectedMany[0].id };
-  store.many_DeleteById();
-  store.app.selectedMany = [];
-}
-
-function editDocument() {
-  store.many.document.id = store.app.selectedMany[0].id;
-  store.app.showEditDialog = true;
-}
-</script> -->
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useStore } from "../stores/store";
@@ -85,9 +18,9 @@ const filteredDocuments = computed(() => {
 onMounted(() => {
   store.many_GetAll();
   store.one_GetAll();
-  store.bnhFl_GetAll();
-
-  toggleValues.value = new Array(store.bnhFl.documents.length).fill(false);
+  store.bnhFl_GetAll();  
+   toggleValues.value = new Array(store.bnhFl.documents.length).fill(false);
+   console.log(toggleValues.value);
 });
 
 function handleSelectionChange(newValue) {
@@ -101,6 +34,12 @@ function handleSelectionChange(newValue) {
   if (categoryName !== "") {
     store.bnhFl_GetByCategoryId(categoryName);
   }
+}
+
+function shortenString(source_string, max_length) {
+  var short = source_string.substr(0, max_length);
+  if (/^\S/.test(source_string.substr(max_length))) return short.replace(/\s+\S*$/, "") + "...";
+  return short;
 }
 
 function deleteDocument(): void {
@@ -123,17 +62,12 @@ function editDocument() {
         emit-value
         filled
         label="Kategória"
-        map-options
+        map-options        
         option-label="nev"
         option-value="_id"
         :options="store.one.documents"
         @update:model-value="(newValue) => handleSelectionChange(newValue)"
       />
-      <!-- <q-item v-for="label in store.one.documents" v-bind:key="label" v-close-popup clickable @click="handleSelectionChange(newValue)">
-        <q-item-section>
-          <q-item-label>{{ label.categoryNameField }}</q-item-label>
-        </q-item-section>
-      </q-item> -->
     </div>
     <div class="row">
       <div class="col col-lg-12 col-md-4 col-sm-4"></div>
@@ -147,9 +81,6 @@ function editDocument() {
         class="col-xs-12 col-sm-6 col-md-3 col-lg-3"
         style="margin: 10px"
       >
-        <!-- |
-              | v-if="item.kategoria_id == defaultCategoryId"
-              V -->
         <div>
           <div class="col">
             <div class="text-h6 text-center" style="background-color: #c1e2b3">
@@ -177,7 +108,7 @@ function editDocument() {
               <div style="font-size: small; line-height: 1.1rem; font-weight: normal; padding: 10px">
                 <br />
                 <div v-if="toggleValues[_id] == false">
-                  {{ item.leiras && item.leiras.length > 120 ? item.leiras.substring(0, 120) + "..." : item.leiras }}
+                  {{ shortenString(item.leiras, 200) }}
                 </div>
                 <div v-else>
                   {{ item.leiras }}
@@ -200,8 +131,6 @@ function editDocument() {
                   <q-toggle v-model="toggleValues[_id]" color="gray" label="Teljes leírás" left-label size="xs" />
                 </div>
               </div>
-
-              <!-- v-for="src in store.bnhFl.documents" :key="src.kepek" -->
               <div class="q-pa-md" style="background-color: bisque">
                 <q-carousel v-model="slide" animated infinite swipeable thumbnails>
                   <q-carousel-slide
@@ -209,9 +138,6 @@ function editDocument() {
                     :name="1"
                   />
                 </q-carousel>
-                <!-- <q-carousel v-model="slide" animated infinite swipeable thumbnails>
-                  <q-carousel-slide v-for="(value, key) in myMap" :key="key" :img-src="value" :name="key"/>
-                </q-carousel> -->
               </div>
               <div style="background-color: bisque">
                 <q-btn
@@ -226,7 +152,6 @@ function editDocument() {
             </div>
           </div>
         </div>
-        <!-- <div v-else></div> -->
       </q-card>
     </div>
     <NewDialogComponent />
