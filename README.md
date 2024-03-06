@@ -1,8 +1,13 @@
 # Benedek-Nikli Hunor & Farkas Levente
 Quasar Exersice
 
-![Quasar](https://cdn.quasar.dev/logo-v2/512/logo.png)
+Report:
+- Category selection works
+- images are working, but sometimes laggy
+- toggle finally set to false and stays there
+- description is cut at the end of the last word
+- dynamic card positions and sizes
 
-Imagine it's working:
-
-![We did it](https://media.tenor.com/5c9Owod1dSsAAAAM/infinite-infinito.gif)
+what doesb't work:
+ - editing advertisements
+ - creating new advertisements
